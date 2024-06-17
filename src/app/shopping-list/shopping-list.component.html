@@ -1,0 +1,17 @@
+    <div class="shopping-list-container">
+        <mat-card>
+        <mat-form-field>
+            <input matInput placeholder="Nuevo ítem" [(ngModel)]="newItem">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="number" placeholder="Cantidad" [(ngModel)]="newItemQuantity" min="1">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addItem()">Añadir</button>
+        </mat-card>
+    
+        <mat-card *ngFor="let item of items; let i = index">
+        <p>{{ item.name }} - Cantidad: {{ item.quantity }}</p>
+        <button mat-raised-button color="warn" (click)="removeItem(i)">Eliminar</button>
+        </mat-card>
+    </div>
+    
