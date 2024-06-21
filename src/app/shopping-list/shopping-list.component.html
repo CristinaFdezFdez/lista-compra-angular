@@ -1,17 +1,101 @@
     <div class="shopping-list-container">
-        <mat-card>
-        <mat-form-field>
-            <input matInput placeholder="Nuevo ítem" [(ngModel)]="newItem">
+        <h1 class="shopping-list-title">
+        {{ title }}
+        </h1>
+    
+        <!-- Formulario de añadir ítems, oculto cuando showTicket es true -->
+        <mat-card class="add-item-card" *ngIf="!showTicket">
+        <mat-form-field appearance="outline">
+            <mat-label>Seleccionar ítem</mat-label>
+            <select matNativeControl [(ngModel)]="newItem">
+            <option disabled selected>Seleccionar ítem</option>
+            <option value="Manzanas">Manzanas</option>
+            <option value="Plátanos">Plátanos</option>
+            <option value="Naranjas">Naranjas</option>
+            <option value="Tomates">Tomates</option>
+            <option value="Lechuga">Lechuga</option>
+            <option value="Zanahorias">Zanahorias</option>
+            <option value="Patatas">Patatas</option>
+            <option value="Cebollas">Cebollas</option>
+            <option value="Pimientos">Pimientos</option>
+            <option value="Leche">Leche</option>
+            <option value="Yogur">Yogur</option>
+            <option value="Queso">Queso</option>
+            <option value="Mantequilla">Mantequilla</option>
+            <option value="Pollo">Pollo</option>
+            <option value="Carne de res">Carne de res</option>
+            <option value="Cerdo">Carned de Cerdo</option>
+            <option value="Pescado">Pescado</option>
+            <option value="Gambas">Gambas</option>
+            <option value="Atún">Atún</option>
+            <option value="Tomate triturado">Tomate triturado</option>
+            <option value="Maíz">Maíz</option>
+            <option value="Garbanzos">Garbanzos</option>
+            <option value="Judías verdes">Judías verdes</option>
+            <option value="Pan">Pan</option>
+            <option value="Arroz">Arroz</option>
+            <option value="Pasta">Pasta</option>
+            <option value="Avena">Avena</option>
+            <option value="Cereales">Cereales</option>
+            <option value="Agua">Agua</option>
+            <option value="Jugo de naranja">Jugo de naranja</option>
+            <option value="Café">Café</option>
+            <option value="Té">Té</option>
+            <option value="Refrescos">Refrescos</option>
+            <option value="Detergente">Detergente</option>
+            <option value="Suavizante">Suavizante</option>
+            <option value="Limpiador multiusos">Limpiador multiusos</option>
+            <option value="Bolsas de basura">Bolsas de basura</option>
+            <option value="Huevos">Huevos</option>
+            <option value="Aceite de oliva">Aceite de oliva</option>
+            <option value="Sal">Sal</option>
+            <option value="Azúcar">Azúcar</option>
+            <option value="Harina">Harina</option>
+            </select>
         </mat-form-field>
-        <mat-form-field>
-            <input matInput type="number" placeholder="Cantidad" [(ngModel)]="newItemQuantity" min="1">
+        <mat-form-field appearance="outline">
+            <mat-label>Escribe lo que te apetezca comprar</mat-label>
+            <input matInput placeholder="Escribir nuevo ítem" [(ngModel)]="newItem" *ngIf="!customItemMode">
+            <input matInput placeholder="Escribir nuevo ítem" [(ngModel)]="newItem" *ngIf="customItemMode">
         </mat-form-field>
-        <button mat-raised-button color="primary" (click)="addItem()">Añadir</button>
+        <mat-form-field appearance="outline">
+            <mat-label>Cantidad</mat-label>
+            <input matInput type="number" placeholder="1" [(ngModel)]="newItemQuantity" min="1">
+        </mat-form-field>
+    
+        <button mat-raised-button color="primary" (click)="addItem()">
+            <mat-icon>add</mat-icon> Añadir
+        </button>
         </mat-card>
     
-        <mat-card *ngFor="let item of items; let i = index">
-        <p>{{ item.name }} - Cantidad: {{ item.quantity }}</p>
-        <button mat-raised-button color="warn" (click)="removeItem(i)">Eliminar</button>
-        </mat-card>
+        <!-- Botón para ver la lista -->
+        <div class="ticket-section">
+        <button mat-raised-button color="primary" (click)="toggleTicket()">
+            {{ showTicket ? 'Ocultar Lista' : 'Ver Lista' }}
+        </button>
+        </div>
+    
+        <!-- Ticket -->
+        <div *ngIf="showTicket" class="ticket-display">
+        <div class="ticket">
+            <div class="ticket-header">
+            <h3>Mi lista de la compra</h3>
+            <p>Fecha: {{ currentDate }}</p>
+            <p>-----------------------------</p>
+            </div>
+            <div class="ticket-body">
+            <div *ngFor="let item of items; let i = index" class="ticket-item">
+                <span>{{ item.name }}</span><span>Cantidad: {{ item.quantity }}</span>
+                <button mat-icon-button color="warn" (click)="removeItem(i)">
+                <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+            </div>
+            <div class="ticket-footer">
+            <p>-----------------------------</p>
+            <p>¡Gracias por su compra!</p>
+            </div>
+        </div>
+        </div>
     </div>
-    
+        

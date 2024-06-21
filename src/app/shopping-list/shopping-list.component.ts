@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+
+
 
 interface ShoppingItem {
   name: string;
@@ -13,37 +19,38 @@ interface ShoppingItem {
 @Component({
   selector: 'app-shopping-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule, MatIconModule, MatCardModule, MatFormFieldModule, MatSelectModule,],
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.css']
 })
-export class ShoppingListComponent implements OnInit {
-  newItem: string = '';
-  newItemQuantity: number = 1;
+export class ShoppingListComponent {
+  title = 'Lista de la Compra';
+  newItem = '';
+  newItemQuantity = 1;
   items: ShoppingItem[] = [];
+  showTicket = false;
+  selectedItem: string = '';
+  customItemMode = false; 
 
-  ngOnInit() {
-    const savedItems = localStorage.getItem('shoppingList');
-    if (savedItems) {
-      this.items = JSON.parse(savedItems);
-    }
-  }
 
-  addItem() {
-    if (this.newItem.trim()) {
-      this.items.push({ name: this.newItem.trim(), quantity: this.newItemQuantity });
-      this.saveItems();
+  currentDate: string = new Date().toLocaleDateString();
+
+  constructor() {}
+
+  addItem(): void {
+    if (this.newItem && this.newItemQuantity > 0) {
+      this.items.push({ name: this.newItem, quantity: this.newItemQuantity });
       this.newItem = '';
       this.newItemQuantity = 1;
     }
   }
 
-  removeItem(index: number) {
-    this.items.splice(index, 1);
-    this.saveItems();
+  toggleTicket(): void {
+    this.showTicket = !this.showTicket;
   }
 
-  saveItems() {
-    localStorage.setItem('shoppingList', JSON.stringify(this.items));
+  removeItem(index: number): void {
+    this.items.splice(index, 1);
   }
 }
+
