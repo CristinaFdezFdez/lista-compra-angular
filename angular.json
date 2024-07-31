@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "shopping-list": {
+    "landingPageAngular17": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/shopping-list",
+            "outputPath": "dist/landing-page-angular17",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -21,16 +21,25 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/_redirects",
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "output": "/assets/"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "public",
+                "output": "/"
               }
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/rose-red.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -60,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "shopping-list:build:production"
+              "buildTarget": "landingPageAngular17:build:production"
             },
             "development": {
-              "buildTarget": "shopping-list:build:development"
+              "buildTarget": "landingPageAngular17:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +95,6 @@
               }
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/rose-red.css",
               "src/styles.css"
             ],
             "scripts": []
