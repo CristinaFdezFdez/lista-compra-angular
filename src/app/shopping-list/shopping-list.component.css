@@ -75,6 +75,20 @@
 .ticket-item button {
     margin-left: 10px;
 }
+.footer {
+    text-align: center;
+    background-color: #ba005c;
+    position: relative;
+    color: #ffffff;
+    width: 100vw;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.875rem;
+}
 
 
 
