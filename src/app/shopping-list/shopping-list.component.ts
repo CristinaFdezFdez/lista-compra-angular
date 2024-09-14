@@ -3,13 +3,12 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon'; 
 
 @Component({
   selector: 'app-shopping-list',
   standalone: true,
   templateUrl: './shopping-list.component.html',
-  imports: [CommonModule, FormsModule, MatIconModule],
+  imports: [CommonModule, FormsModule],
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent {
