@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+
 import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 
 @Component({

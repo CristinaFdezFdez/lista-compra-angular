@@ -1,103 +1,76 @@
-    <div class="shopping-list-container">
-        <h1 class="shopping-list-title">
-        {{ title }}
-        </h1>
-    
-        <!-- Formulario de añadir ítems, oculto cuando showTicket es true -->
-        <mat-card class="add-item-card" *ngIf="!showTicket">
-        <mat-form-field appearance="outline">
-            <mat-label>Seleccionar ítem</mat-label>
-            <select matNativeControl [(ngModel)]="newItem">
-            <option disabled selected>Seleccionar ítem</option>
-            <option value="Manzanas">Manzanas</option>
-            <option value="Plátanos">Plátanos</option>
-            <option value="Naranjas">Naranjas</option>
-            <option value="Tomates">Tomates</option>
-            <option value="Lechuga">Lechuga</option>
-            <option value="Zanahorias">Zanahorias</option>
-            <option value="Patatas">Patatas</option>
-            <option value="Cebollas">Cebollas</option>
-            <option value="Pimientos">Pimientos</option>
-            <option value="Leche">Leche</option>
-            <option value="Yogur">Yogur</option>
-            <option value="Queso">Queso</option>
-            <option value="Mantequilla">Mantequilla</option>
-            <option value="Pollo">Pollo</option>
-            <option value="Carne de res">Carne de res</option>
-            <option value="Cerdo">Carned de Cerdo</option>
-            <option value="Pescado">Pescado</option>
-            <option value="Gambas">Gambas</option>
-            <option value="Atún">Atún</option>
-            <option value="Tomate triturado">Tomate triturado</option>
-            <option value="Maíz">Maíz</option>
-            <option value="Garbanzos">Garbanzos</option>
-            <option value="Judías verdes">Judías verdes</option>
-            <option value="Pan">Pan</option>
-            <option value="Arroz">Arroz</option>
-            <option value="Pasta">Pasta</option>
-            <option value="Avena">Avena</option>
-            <option value="Cereales">Cereales</option>
-            <option value="Agua">Agua</option>
-            <option value="Jugo de naranja">Jugo de naranja</option>
-            <option value="Café">Café</option>
-            <option value="Té">Té</option>
-            <option value="Refrescos">Refrescos</option>
-            <option value="Detergente">Detergente</option>
-            <option value="Suavizante">Suavizante</option>
-            <option value="Limpiador multiusos">Limpiador multiusos</option>
-            <option value="Bolsas de basura">Bolsas de basura</option>
-            <option value="Huevos">Huevos</option>
-            <option value="Aceite de oliva">Aceite de oliva</option>
-            <option value="Sal">Sal</option>
-            <option value="Azúcar">Azúcar</option>
-            <option value="Harina">Harina</option>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">{{ title }}</h1>
+        
+        <!-- Si el ticket no está siendo mostrado, mostramos el formulario -->
+        <div *ngIf="!showTicket">
+        <!-- Select para elegir entre opciones predefinidas -->
+        <div class="mb-3 mt-4">
+            <label for="itemSelect" class="form-label">Selecciona un producto:</label>
+            <div class="input-group">
+            <select class="form-select" id="itemSelect" [(ngModel)]="newItem">
+                <option value="" disabled selected>Selecciona un producto</option>
+                <option *ngFor="let option of itemOptions" [value]="option">{{ option }}</option>
             </select>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Escribe tu producto</mat-label>
-            <input matInput placeholder="Escribir nuevo ítem" [(ngModel)]="newItem" *ngIf="!customItemMode">
-            <input matInput placeholder="Escribir nuevo ítem" [(ngModel)]="newItem" *ngIf="customItemMode">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Cantidad</mat-label>
-            <input matInput type="number" placeholder="1" [(ngModel)]="newItemQuantity" min="1">
-        </mat-form-field>
-    
-        <button mat-raised-button color="primary" (click)="addItem()">
-            <mat-icon>add</mat-icon> Añadir
-        </button>
-        </mat-card>
-    
-        <!-- Botón para ver la lista -->
-        <div class="ticket-section">
-        <button mat-raised-button color="primary" (click)="toggleTicket()">
-            {{ showTicket ? 'Ocultar Lista' : 'Ver Lista' }}
-        </button>
-        </div>
-    
-        <!-- Ticket -->
-        <div *ngIf="showTicket" class="ticket-display">
-        <div class="ticket">
-            <div class="ticket-header">
-            <h3>Mi lista de la compra</h3>
-            <p>Fecha: {{ currentDate }}</p>
-            <p>-----------------------------</p>
+            <button class="btn btn-primary" (click)="addItem()">Añadir</button>
             </div>
+        </div>
+        
+        <!-- Input para añadir productos personalizados -->
+        <div class="mb-3">
+            <label for="customItemInput" class="form-label">O añade un producto personalizado:</label>
+            <div class="input-group">
+            <input type="text" class="form-control" id="customItemInput" [(ngModel)]="newItem" placeholder="Escribe un producto">
+            <input type="number" class="form-control quantity-input" [(ngModel)]="newItemQuantity" min="1" placeholder="Cantidad">
+            <select class="form-select quantity-unit" [(ngModel)]="quantityUnit">
+                <option value="unidad">Unidad</option>
+                <option value="kilo">Kilo</option>
+                <option value="litro">Litro</option>
+            </select>
+            <button class="btn btn-primary" (click)="addItem()">Añadir</button>
+            </div>
+        </div>
+        
+        <!-- Lista de productos -->
+        <ul class="list-group mt-3">
+            <li *ngFor="let item of items; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+            {{ item.name }} (Cantidad: {{ item.quantity }} {{ item.unit }})
+            <button class="btn btn-danger btn-sm" (click)="removeItem(i)">
+                <i class="bi bi-trash"></i> Eliminar
+            </button>
+            </li>
+        </ul>
+        </div>
+        
+        <!-- Si el ticket está siendo mostrado, mostramos el ticket -->
+        <div *ngIf="showTicket">
+        <div #ticketDisplay class="ticket-display mt-4">
+            <div class="ticket p-3 border">
+            <div class="ticket-header text-center">
+                <h3>Mi lista de la compra</h3>
+                <p>Fecha: {{ currentDate }}</p>
+                <p>-----------------------------</p>
+            </div>
+    
             <div class="ticket-body">
-            <div *ngFor="let item of items; let i = index" class="ticket-item">
-                <span>{{ item.name }}</span><span>Cantidad: {{ item.quantity }}</span>
-                <button mat-icon-button color="warn" (click)="removeItem(i)">
-                <mat-icon>delete</mat-icon>
-                </button>
+                <div *ngFor="let item of items" class="ticket-item">
+                <span>{{ item.name }} (Cantidad: {{ item.quantity }} {{ item.unit }})</span>
+                </div>
             </div>
+    
+            <div class="ticket-footer text-center">
+                <p>-----------------------------</p>
+                <p>¡Gracias por su compra!</p>
             </div>
-            <div class="ticket-footer">
-            <p>-----------------------------</p>
-            <p>¡Gracias por su compra!</p>
             </div>
         </div>
+        </div>
+    
+        <!-- Botones para mostrar/ocultar y descargar el ticket -->
+        <div class="mt-4 d-flex justify-content-between">
+        <button class="btn btn-secondary" (click)="toggleTicket()">
+            {{ showTicket ? 'Ocultar Ticket' : 'Mostrar Ticket' }}
+        </button>
+        <button *ngIf="showTicket" class="btn btn-primary" (click)="downloadTicket()">Descargar Ticket</button>
         </div>
     </div>
-    <footer class="footer">
-        <p>© 2024 Cristina Fdez</p>
-    </footer> 
+    

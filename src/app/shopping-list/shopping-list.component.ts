@@ -1,56 +1,65 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-
-
-
-interface ShoppingItem {
-  name: string;
-  quantity: number;
-}
+import { MatIconModule } from '@angular/material/icon'; 
 
 @Component({
   selector: 'app-shopping-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule, MatIconModule, MatCardModule, MatFormFieldModule, MatSelectModule,],
   templateUrl: './shopping-list.component.html',
+  imports: [CommonModule, FormsModule, MatIconModule],
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent {
   title = 'Lista de la Compra';
-  newItem = '';
-  newItemQuantity = 1;
-  items: ShoppingItem[] = [];
   showTicket = false;
-  selectedItem: string = '';
-  customItemMode = false; 
-
-
+  newItem: string = '';
+  newItemQuantity: number = 1;
+  quantityUnit: string = 'unidad'; // Default unit
+  items: { name: string, quantity: number, unit: string }[] = [];
   currentDate: string = new Date().toLocaleDateString();
+  
+  // Define itemOptions array
+  itemOptions: string[] = [
+    'Manzanas', 'Plátanos', 'Naranjas', 'Tomates', 'Lechuga', 'Zanahorias', 
+    'Patatas', 'Cebollas', 'Pimientos', 'Leche', 'Yogur', 'Queso', 
+    'Mantequilla', 'Pollo', 'Carne de res', 'Cerdo', 'Pescado', 
+    'Gambas', 'Atún', 'Tomate triturado', 'Maíz', 'Garbanzos', 
+    'Judías verdes', 'Pan', 'Arroz', 'Pasta', 'Avena', 'Cereales', 
+    'Agua', 'Jugo de naranja', 'Café', 'Té', 'Refrescos', 
+    'Detergente', 'Suavizante', 'Limpiador multiusos', 'Bolsas de basura', 
+    'Huevos', 'Aceite de oliva', 'Sal', 'Azúcar', 'Harina'
+  ];
 
-  constructor() {}
+  @ViewChild('ticketDisplay', { static: false }) ticketDisplay: ElementRef | undefined;
 
-  addItem(): void {
+  addItem() {
     if (this.newItem && this.newItemQuantity > 0) {
-      this.items.push({ name: this.newItem, quantity: this.newItemQuantity });
+      this.items.push({ name: this.newItem, quantity: this.newItemQuantity, unit: this.quantityUnit });
       this.newItem = '';
       this.newItemQuantity = 1;
+      this.quantityUnit = 'unidad'; // Reset unit after adding item
     }
   }
 
-  toggleTicket(): void {
+  removeItem(index: number) {
+    this.items.splice(index, 1);
+  }
+
+  toggleTicket() {
     this.showTicket = !this.showTicket;
   }
 
-  removeItem(index: number): void {
-    this.items.splice(index, 1);
+  downloadTicket() {
+    if (this.ticketDisplay) {
+      html2canvas(this.ticketDisplay.nativeElement, { useCORS: true }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
+        pdf.save('ticket.pdf');
+      });
+    }
   }
 }
-
