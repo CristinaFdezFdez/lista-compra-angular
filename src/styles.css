@@ -5,6 +5,7 @@
     /* General Styles */
 body {
     background: linear-gradient(135deg, #f4a8d1, #f6d5a6); /* Rosas y amarillos claros */
+    background-repeat: repeat;
     width: 100vw;
     height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
