@@ -46,6 +46,19 @@ export class ShoppingListComponent {
   removeItem(index: number) {
     this.items.splice(index, 1);
   }
+  getUnit(unit: string, quantity: number): string {
+    switch (unit) {
+        case 'unidad':
+            return quantity > 1 ? 'unidades' : 'unidad';
+        case 'kilo':
+            return quantity > 1 ? 'kilos' : 'kilo';
+        case 'litro':
+            return quantity > 1 ? 'litros' : 'litro';
+        default:
+            return unit; // En caso de que haya una unidad no esperada
+    }
+}
+
 
   toggleTicket() {
     this.showTicket = !this.showTicket;

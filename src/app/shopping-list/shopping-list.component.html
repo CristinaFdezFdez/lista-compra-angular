@@ -32,12 +32,13 @@
         <!-- Lista de productos -->
         <ul class="list-group mt-3">
             <li *ngFor="let item of items; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
-            {{ item.name }} (Cantidad:{{ item.quantity }} {{ item.unit }})
-            <button class="btn btn-danger btn-sm" (click)="removeItem(i)">
-                <i class="bi bi-trash"></i> Eliminar
-            </button>
+                {{ item.name }} (Cantidad: {{ item.quantity }} {{ getUnit(item.unit, item.quantity) }})
+                <button class="btn btn-danger btn-sm" (click)="removeItem(i)">
+                    <i class="bi bi-trash"></i> Eliminar
+                </button>
             </li>
         </ul>
+        
         </div>
         
         <!-- Si el ticket está siendo mostrado, mostramos el ticket -->
@@ -52,7 +53,7 @@
     
             <div class="ticket-body">
                 <div *ngFor="let item of items" class="ticket-item">
-                <span>{{ item.name }} -- (Cantidad:{{ item.quantity }} {{ item.unit }})</span>
+                <span>{{ item.name }} (Cantidad: {{ item.quantity }} {{ getUnit(item.unit, item.quantity) }})</span>
                 </div>
             </div>
     
