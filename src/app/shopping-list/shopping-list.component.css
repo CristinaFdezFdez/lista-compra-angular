@@ -1,12 +1,4 @@
-    /* General Styles */
-    body {
-        background: linear-gradient(135deg, #5c92c7, #4c6e9b);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-    
-    /* Container */
+ /* Container */
     .container {
         max-width: 90%;
         padding: 20px;
@@ -15,6 +7,11 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin: 110px auto;
         position: relative;
+    }
+    h1 {
+        color: #C2185B; /* Ejemplo de un rosa oscuro */
+        font-size: 36px;
+        font-weight: bold;
     }
     
     /* Button Styles */
@@ -25,13 +22,13 @@
     }
     
     .btn-primary {
-        background-color: #007bff;
+        background-color: rgb(248, 248, 110);
         border: none;
-        color: #fff;
+        color: black;
     }
     
     .btn-primary:hover {
-        background-color: #0056b3;
+        background-color: yellow;
     }
     
     .btn-secondary {
@@ -64,7 +61,7 @@
     .input-group .form-select {
         border-radius: 25px;
         padding: 10px;
-        font-size: 16px; /* Ensures larger text for better readability */
+        font-size: 16px;
     }
     
     .quantity-input,
@@ -78,76 +75,80 @@
     
     /* Ticket Display Styles */
     .ticket-display {
-        background-color: lightgray;
+        background-color: whitesmoke;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         padding: 15px;
         border-radius: 10px;
         margin-top: 20px;
     }
     
-    
     .ticket-footer {
-        
         padding-top: 10px;
     }
     
-    /* Responsive Styles */
-    @media (max-width: 768px) {
-        .container {
-        padding: 15px;
-        }
-    
-        .input-group {
-        flex-direction: column;
-        }
-    
-        .input-group .form-control,
-        .input-group .form-select {
-        width: 100%;
-        font-size: 16px; /* Ensures larger text for better readability */
-        margin-bottom: 10px;
-        }
-    
-        .quantity-input,
-        .quantity-unit {
-        width: 100%;
-        font-size: 16px; /* Ensures larger text for better readability */
-        padding: 12px; /* Adds more padding for better usability */
-        }
-    
-        .btn {
-        width: 100%;
+/* Mejora de los inputs y botones en móviles */
+@media (max-width: 768px) {
+    .input-group .form-control,
+    .input-group .form-select {
+        width: 100%; /* Hace que los inputs usen el 100% del ancho disponible */
         font-size: 16px;
         margin-bottom: 10px;
-        }
-    
-        .ticket-display {
-        margin: 0;
-        }
     }
-    
-    @media (max-width: 576px) {
-        .btn {
-        font-size: 14px;
-        padding: 8px 16px;
-        }
-    
-        .container {
-        border-radius: 0;
-        box-shadow: none;
-        }
-    
-        .input-group .form-control,
-        .input-group .form-select {
-        font-size: 14px;
-        padding: 12px;
-        }
-    
-        .quantity-input,
-        .quantity-unit {
+
+    .quantity-input,
+    .quantity-unit {
+        width: 48%; /* Hace que los inputs de cantidad y unidad ocupen el mismo espacio */
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .quantity-input {
+        margin-right: 4%; /* Añade espacio entre los inputs de cantidad y unidad */
+    }
+
+    /* Asegura que los botones ocupen el 100% del ancho en pantallas pequeñas */
+    .btn {
         width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn-primary {
+        background-color: rgb(248, 248, 110); /* Amarillo */
+        border: none;
+        color: black;
+        width: 100%; /* Botón ocupa el 100% en pantallas pequeñas */
+    }
+
+    .btn-danger {
+        width: 100%; /* Botón de eliminar también ocupa el 100% */
+    }
+
+    /* Asegura que los botones estén bien alineados en pantallas pequeñas */
+    .d-flex {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .quantity-input,
+    .quantity-unit {
+        width: 48%;
         font-size: 14px;
         padding: 10px;
-        }
     }
-    
+
+    .quantity-input {
+        margin-right: 4%;
+    }
+
+    .form-control {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 8px 16px;
+        width: 100%; /* Botones ocupan el 100% */
+    }
+}

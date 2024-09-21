@@ -1,5 +1,5 @@
     <div class="container mt-4">
-        <h1 class="text-center mb-4">{{ title }}</h1>
+        <h1 class="text-center mb-4"><span class="material-icons">shopping_basket</span> {{ title }}</h1>
         
         <!-- Si el ticket no está siendo mostrado, mostramos el formulario -->
         <div *ngIf="!showTicket">
@@ -11,7 +11,6 @@
                 <option value="" disabled selected>Selecciona un producto</option>
                 <option *ngFor="let option of itemOptions" [value]="option">{{ option }}</option>
             </select>
-            <button class="btn btn-primary" (click)="addItem()">Añadir</button>
             </div>
         </div>
         
@@ -20,7 +19,7 @@
             <label for="customItemInput" class="form-label">O añade un producto personalizado:</label>
             <div class="input-group">
             <input type="text" class="form-control" id="customItemInput" [(ngModel)]="newItem" placeholder="Escribe un producto">
-            <input type="number" class="form-control quantity-input" [(ngModel)]="newItemQuantity" min="1" placeholder="Cantidad">
+            <input type="number" class="form-control quantity-input" [(ngModel)]="newItemQuantity" min="1" step="1" placeholder="Cantidad" oninput="validity.valid||(value='');">
             <select class="form-select quantity-unit" [(ngModel)]="quantityUnit">
                 <option value="unidad">Unidad</option>
                 <option value="kilo">Kilo</option>
@@ -33,7 +32,7 @@
         <!-- Lista de productos -->
         <ul class="list-group mt-3">
             <li *ngFor="let item of items; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
-            {{ item.name }} (Cantidad: {{ item.quantity }} {{ item.unit }})
+            {{ item.name }} (Cantidad:{{ item.quantity }} {{ item.unit }})
             <button class="btn btn-danger btn-sm" (click)="removeItem(i)">
                 <i class="bi bi-trash"></i> Eliminar
             </button>
@@ -46,14 +45,14 @@
         <div #ticketDisplay class="ticket-display mt-4">
             <div class="ticket p-3 border">
             <div class="ticket-header text-center">
-                <h3>Mi lista de la compra</h3>
+                <h3>PlanCompras</h3>
                 <p>Fecha: {{ currentDate }}</p>
                 <p>-----------------------------</p>
             </div>
     
             <div class="ticket-body">
                 <div *ngFor="let item of items" class="ticket-item">
-                <span>{{ item.name }} (Cantidad: {{ item.quantity }} {{ item.unit }})</span>
+                <span>{{ item.name }} -- (Cantidad:{{ item.quantity }} {{ item.unit }})</span>
                 </div>
             </div>
     

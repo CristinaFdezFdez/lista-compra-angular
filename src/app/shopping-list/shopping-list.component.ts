@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent {
-  title = 'Lista de la Compra';
+  title = 'ComprApp';
   showTicket = false;
   newItem: string = '';
   newItemQuantity: number = 1;
